@@ -1,0 +1,30 @@
+name: Continuous integration pipeline
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+jobs:
+  build-zigbee-application:
+    name: Build the sample application binary
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4.2.2
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+      - name: Setup Zephyr project
+        uses: zephyrproject-rtos/action-zephyr-setup@v1
+        with:
+          toolchains: arm-zephyr-eabi
+      - name: Build the zigbee binary
+        shell: bash
+        run: |
+          west build -b promicro_nrf52840 app
+      - name: Upload zigbee artifacts
+        uses: actions/upload-artifact@v4.6.1
+        with:
+          name: zephyr-zigbee
+          path: app/build/zephyr/zephyr.*
