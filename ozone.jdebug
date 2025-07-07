@@ -32,11 +32,11 @@ void OnProjectLoad (void) {
   // User settings
   //
   Project.AddPathSubstitute("/workdir/zephyr-zigbee/app/src", "$(ProjectDir)/app/src");
-  Project.AddPathSubstitute("/workdir/zephyr-zigbee/build/zephyr", "$(ProjectDir)/build/zephyr");
+  Project.AddPathSubstitute("/workdir/zephyr-zigbee/build/app/zephyr", "$(ProjectDir)/build/app/zephyr");
   Project.AddPathSubstitute("/workdir/modules", "$(ProjectDir)/../modules");
   Project.AddPathSubstitute("/workdir/zephyr", "$(ProjectDir)/../zephyr");
 
-  File.Open ("$(ProjectDir)/build/zephyr/zephyr.elf");
+  File.Open ("$(ProjectDir)/build/app/zephyr/zephyr.elf");
 }
 
 /*********************************************************************

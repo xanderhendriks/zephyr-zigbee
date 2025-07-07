@@ -3,17 +3,19 @@ manifest:
     west-commands: scripts/west-commands.yml
 
   remotes:
-    - name: zephyrproject-rtos
-      url-base: https://github.com/zephyrproject-rtos
+    - name: nordic
+      url-base: https://github.com/nrfconnect
 
   projects:
-    - name: zephyr
-      remote: zephyrproject-rtos
-      revision: v4.1.0
-      import:
-        # By using name-allowlist we can clone only the modules that are
-        # strictly needed by the application.
+    - name: sdk-nrf
+      remote: nordic
+      revision: v3.0.2        # or a tag/sha you trust
+      path: nrf
+      import:                 # pull the extra modules nrf’s sub-manifest needs
         name-allowlist:
-          - cmsis      # required by the ARM port
-          - hal_nordic # Required by promicro_nrf52840 board
-
+          - cmsis             # required by the ARM port
+          - hal_nordic        # already present, but import keeps versions aligned
+          - mcuboot           # Nordic keeps its mcuboot fork here
+          - nrfxlib           # soft-device controller, ZBOSS, …
+          - segger            # RTT, systemview etc.  (optional)
+          - zephyr            # The zephyr RTOS
